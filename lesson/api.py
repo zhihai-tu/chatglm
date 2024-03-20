@@ -9,7 +9,7 @@ from data_types import TextMsg, ImageMsg, TextMsgList, MsgList, CharacterMeta
 
 
 # 智谱开放平台API key，参考 https://open.bigmodel.cn/usercenter/apikeys
-API_KEY: str = os.getenv("API_KEY", "")
+API_KEY: str = os.getenv("API_KEY", "c8287cfcdc39df0e79e266cdf1c59070.bDnkscw4o5185uiy")
 
 
 class ApiKeyNotSet(ValueError):
@@ -98,7 +98,7 @@ def get_chatglm_response_via_sdk(messages: TextMsgList) -> Generator[str, None, 
     verify_api_key_not_empty()
     client = ZhipuAI(api_key=API_KEY) # 请填写您自己的APIKey
     response = client.chat.completions.create(
-        model="glm-3-turbo",  # 填写需要调用的模型名称
+        model="glm-4",  # 填写需要调用的模型名称
         messages=messages,
         stream=True,
     )

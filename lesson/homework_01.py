@@ -12,6 +12,9 @@ python-dotenv
 ```bash
 streamlit run characterglm_api_demo_streamlit.py
 ```
+
+作业一
+改进 characterglm_api_demo_streamlit.py 的代码，为文生图功能加上风格选项，并在页面上加一个可指定图片风格的选项框。
 """
 import os
 import itertools
@@ -75,7 +78,6 @@ with st.container():
     with col1:
         st.text_input(label="角色名", key="bot_name", on_change=lambda : st.session_state["meta"].update(bot_name=st.session_state["bot_name"]), help="模型所扮演的角色的名字，不可以为空")
         st.text_area(label="角色人设", key="bot_info", on_change=lambda : st.session_state["meta"].update(bot_info=st.session_state["bot_info"]), help="角色的详细人设信息，不可以为空")
-        # st.sidebar.selectbox("选择图片风格", ["二次元", "写实", "油画", "手绘"], index=0)
         st.selectbox(label="图片风格", options=["二次元", "写实", "油画", "手绘"], key="image_style", on_change=lambda : st.session_state["meta"].update(image_style=st.session_state["image_style"]), help="图片的风格，默认为二次元")
 
     with col2:
@@ -116,7 +118,7 @@ def draw_new_image():
         st.error("调用chatglm生成Cogview prompt出错")
         return
     
-    # TODO: 加上风格选项
+    # 加上风格选项
     # image_prompt = '二次元风格。' + image_prompt.strip()
     image_style = st.session_state["meta"]["image_style"]
     image_prompt = f"{image_style}风格。{image_prompt.strip()}"
