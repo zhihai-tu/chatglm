@@ -1,5 +1,6 @@
 """
-一个简单的demo，调用CharacterGLM实现角色扮演，调用CogView生成图片，调用ChatGLM生成CogView所需的prompt。
+作业一
+改进 characterglm_api_demo_streamlit.py 的代码，为文生图功能加上风格选项，并在页面上加一个可指定图片风格的选项框。
 
 依赖：
 pyjwt
@@ -10,11 +11,8 @@ python-dotenv
 
 运行方式：
 ```bash
-streamlit run characterglm_api_demo_streamlit.py
+streamlit run homework_01.py
 ```
-
-作业一
-改进 characterglm_api_demo_streamlit.py 的代码，为文生图功能加上风格选项，并在页面上加一个可指定图片风格的选项框。
 """
 import os
 import itertools
@@ -55,7 +53,7 @@ if "meta" not in st.session_state:
         "bot_info": "",
         "bot_name": "",
         "user_name": "",
-        "image_style": ""
+        "image_style": "二次元"
     }
 
 
