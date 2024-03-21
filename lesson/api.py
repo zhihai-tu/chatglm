@@ -9,7 +9,7 @@ from data_types import TextMsg, ImageMsg, TextMsgList, MsgList, CharacterMeta
 
 
 # 智谱开放平台API key，参考 https://open.bigmodel.cn/usercenter/apikeys
-API_KEY: str = os.getenv("API_KEY", "c8287cfcdc39df0e79e266cdf1c59070.bDnkscw4o5185uiy")
+API_KEY: str = os.getenv("API_KEY", "")
 
 
 class ApiKeyNotSet(ValueError):
