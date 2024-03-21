@@ -9,9 +9,27 @@
 （可选）设计图形界面，通过点击图形界面上的按钮执行对话数据生成，并展示对话数据。
 """
 
-import time
-from dotenv import load_dotenv
-load_dotenv()
+"""
+在homework_02主函数中，设置以下几个变量，可根据实际情况修改：
+
+1、设定第一个角色的名称
+    name1 = "孙悟空"
+2、设定第二个角色的名称
+    name2 = "唐僧"
+3、设定对话的开场白，即第一个角色说的第一句话
+    init_msg = "你好，让我们开始聊天吧。"
+4、对话次数，即角色1和角色2总计说话的次数
+    k=15
+5、在story_01.txt中复制粘贴一段文本，文本主要是对角色1的介绍
+6、在stroy_02.txt中复制粘贴一段文本，文本主要是对角色2的介绍
+
+程序运行：
+执行命令：py homework_02.py
+
+生成的对话结果将保存至：output.txt中
+
+注意：程序运行前需要在api.py中设置好key
+"""
 
 from api import get_chatglm_response_via_sdk, get_characterglm_response
 
@@ -25,7 +43,7 @@ def generate_character_profiles(text):
     Returns:
         str: 某个角色的人设信息
     """
-    prompt = f"根据以下文本,生成某个角色的详细人设信息，约100字左右:\n\n{text}"
+    prompt = f"根据以下文本,生成某个角色的详细人设信息，在100个字以内:\n\n{text}"
     
     response =  get_chatglm_response_via_sdk(
         messages=[
@@ -35,9 +53,7 @@ def generate_character_profiles(text):
             }
         ]
     )
-
-    print("".join(response))
-    return response
+    return "".join(response)
 
 
 def generate_dialogue(character1, character2, name1, name2, history):
@@ -51,7 +67,6 @@ def generate_dialogue(character1, character2, name1, name2, history):
     Returns:
         str: 生成的对话文本
     """
-    #prompt = f"根据以下两个角色的人设,生成一段对话:\n\n{character1}\n\n{character2}"
     
     character_meta = {
         "user_info": character1,
@@ -62,7 +77,6 @@ def generate_dialogue(character1, character2, name1, name2, history):
 
     messages = history
     answer = "".join(get_characterglm_response(messages, meta=character_meta))
-    print(name2 + ":" + answer)
     return answer
 
 def invert_roles(messages):
@@ -83,41 +97,62 @@ def invert_roles(messages):
 
 def homework_02():
 
-    text1 = """
-    孙悟空，是在小说《西游记》中登场的主要角色之一，为一只道行高深的猴子，别名孙行者、孙猴子。自封美猴王、齐天大圣。因曾在天庭掌管御马监而又被称为弼马温，在取经完成后被如来佛祖授封为斗战胜佛。
-    在小说中，孙悟空出身花果山，是由灵石中吸收天地灵气、日月精华，经风吹日晒孕育而成之石猴，在出海后自须菩提祖师处修得七十二变地煞术。修行后他曾先后闯龙宫、地府，取得能随使用者心意自由变化大小的如意金箍棒、并自阎罗王的生死簿上除籍取得永寿。经天界玉皇大帝招安后，由于未受邀蟠桃会并遭讥讽，孙悟空以“齐天大圣”之名大闹天宫、只身与天兵天将相持，后遭释迦如来镇压于五行山（五指山）下。他在封印五百年后被南海观世音点化，保护唐三藏法师前往西天取经，协同猪八戒、沙悟净和白龙马艰辛克难伏魔降妖。旅途中，孙悟空屡次运用其武艺与智慧，拯救为妖怪所劫的唐僧师徒。历经九九八十一难后，终至西天取得真经功成正果。
-    孙悟空为东亚汉字文化圈中智勇兼备的代表性角色，被诸多文学、戏曲、影视作品重新演绎。此类作品在设计上多所沿用原著中孙悟空所使用之金箍棒、筋斗云、七十二变、分身术等等法宝神通，或是参考其本身聪明、调皮、活泼、忠诚、嫉恶如仇等性格特征。
-    """
+    print("####################程序开始####################")
 
-    text2 = """
-    唐僧、唐三藏原型是唐代玄奘法师。宋《大唐三藏取经诗话》中，也以“玄奘”来称呼唐三藏，[1]小说中，唐三藏性格善良慈悲且意志坚定，但有时又显得迂腐且不辨是非，《西游记》中，唐僧所持宝物为观世音菩萨所赠的九环锡杖和锦斓袈裟，在故事最后，唐三藏修成正果，受封旃檀功德佛。[注 1]真实的历史中，玄奘所译经典至今尚有心经与药师经等，当时法师走陆路出新疆葱岭（今帕米尔高原）到印度，回国后应唐太宗之命根据旅途所见所闻编纂出了《大唐西域记》，到1560年代中，明作家吴承恩改写成章回小说《西游记》。
-    今日不明佛教的大众受到《西游记》影响，常误解“三藏”为玄奘专属的称号。实际上，“三藏法师”是一种敬称，指精通佛教圣典三大类别“经、律、论”等三藏的法师，又称三藏比丘、三藏圣师，或略称三藏，因此，将三藏之号特指一人是错误的。称“唐三藏”意在尊称其为“唐国的三藏法师”，有避其名讳之用。除玄奘外，史上著名三藏法师还有东汉安世高、东晋鸠摩罗什与法显、南朝宋求那跋陀罗、唐实叉难陀、义净与大广智不空等；日本史上唯一的三藏法师为灵仙法师。
-    """
+    #设定两个角色的名称
+    name1 = "孙悟空"
+    name2 = "唐僧"
+    #角色1开场白
+    init_msg = "你好，让我们开始聊天吧。"
+    #k为对话的次数
+    k=15
 
+	# 读取txt文件中的文本内容（人物描述信息）
+    with open('story_01.txt', 'r', encoding='utf-8') as file:
+        # 读取文件内容
+        text1 = file.read()
+    with open('story_02.txt', 'r', encoding='utf-8') as file:
+        # 读取文件内容
+        text2 = file.read()
+
+    #根据文本内容，调用chatglm-4生成人设
     character1 = generate_character_profiles(text1)
     character2 = generate_character_profiles(text2)
 
-    init_msg = "你好，让我们开始聊天吧。"
+    # 打印角色人设
+    print(name1 + "-人设：" + character1)
+    print(name2 + "-人设：" + character2)
+
+    #将开场白写入文件中
+    with open('output.txt', 'w', encoding='utf-8') as file:
+        file.write(name1 + "：" + init_msg)
+
     history = [
         {"role": "assistant", "content": init_msg}
     ]
-    print("=========================================================")
-    print("孙悟空：" + init_msg)
 
-    for i in range(1, 10):
+    #根据人设，调用CharacterGLM，交替自动生成答复
+    for i in range(1, k):
         if i%2 == 1:
-            c1 = "".join(character1)
-            c2 = "".join(character2)
-            n1 = "孙悟空"
-            n2 = "唐僧"
+            c1 = character1
+            c2 = character2
+            n1 = name1
+            n2 = name2
         else:
-            c1 = "".join(character2)
-            c2 = "".join(character1)
-            n1 = "唐僧"
-            n2 = "孙悟空" 
+            c1 = character2
+            c2 = character1
+            n1 = name2
+            n2 = name1
 
         answer =  generate_dialogue(c1, c2, n1, n2, invert_roles(history))
+
+        #将答复追加写入文件中
+        with open('output.txt', 'a', encoding='utf-8') as file:
+            file.write("\n" + n2 + "：" + answer)
+
         history.append({"role": "assistant", "content": answer})
+    
+    print("####################程序结束####################")
 
 if __name__ == "__main__":
     homework_02()
